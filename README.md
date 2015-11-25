@@ -1,3 +1,5 @@
 # CardSlide
 仿Nice卡片滑动
-#效果图
+## Preview
+
+![image](https://raw.githubusercontent.com/DavidWangTM/CardSlide/master/nice.gif)
