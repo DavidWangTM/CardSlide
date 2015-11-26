@@ -14,7 +14,7 @@
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 @interface ViewController (){
-    NSMutableArray *data;
+    NSArray *data;
 }
 
 @end
@@ -26,11 +26,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     DWFlowLayout *layout = [[DWFlowLayout alloc] init];
     self.collectionView.collectionViewLayout = layout;
-    
-    data = [NSMutableArray new];
-    for (int i = 0; i < 10; i++) {
-        [data addObject:@""];
-    }
+    data = @[@"01",@"02",@"03",@"04",@"05",@"01",@"02",@"03",@"04",@"05"];
     [_collectionView reloadData];
 }
 
@@ -53,7 +49,7 @@
     DWViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     NSInteger row = indexPath.row;
-    
+    cell.showImg.image = [UIImage imageNamed:[data objectAtIndex:row]];
     
     return cell;
 }
