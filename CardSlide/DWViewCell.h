@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DWViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UILabel *titleLab;
-
+@property (weak, nonatomic) IBOutlet UIImageView *showImg;
 @end

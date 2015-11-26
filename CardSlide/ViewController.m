@@ -51,14 +51,16 @@
 {
     NSString *cellIdentifier = @"DWViewCell";
     DWViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
     NSInteger row = indexPath.row;
-    cell.titleLab.text = [NSString stringWithFormat:@"%ld",row];
+    
+    
     return cell;
 }
 
 #pragma mark cell的大小
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(SCREENWITH - 60, SCREENHEIGHT - 64 - 60);
+    return CGSizeMake(SCREENWITH - 60, SCREENHEIGHT - 64 - 60 - 60);
 }
 
 #pragma mark cell的点击事件
