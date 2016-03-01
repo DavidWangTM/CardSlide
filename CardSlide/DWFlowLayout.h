@@ -10,4 +10,8 @@
 
 @interface DWFlowLayout : UICollectionViewFlowLayout
 
+@property CGFloat move_x;
+@property BOOL isPagingEnabled;
+-(void)setPagingEnabled:(BOOL)isPagingEnabled;
+
 @end

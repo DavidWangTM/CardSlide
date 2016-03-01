@@ -8,11 +8,15 @@
 
 #import "DWFlowLayout.h"
 
+#define SCREENWITH   [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
+
 @implementation DWFlowLayout
 
 -(id)init{
     self = [super init];
     if (self) {
+        _move_x = 0.0;
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         self.minimumLineSpacing = 20.0;
         self.sectionInset = UIEdgeInsetsMake(0,30, 0,30);
@@ -22,6 +26,30 @@
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
+    proposedContentOffset.y = 0.0;
+    if (_isPagingEnabled) {
+        proposedContentOffset.x = [self PageMove:proposedContentOffset];
+    }else{
+        proposedContentOffset.x = [self SMove:proposedContentOffset velocity:velocity];
+    }
+    return proposedContentOffset;
+}
+
+
+-(CGFloat)PageMove:(CGPoint)proposedContentOffset{
+    CGFloat set_x =  proposedContentOffset.x;
+    
+    if (set_x > _move_x) {
+        _move_x += SCREENWITH - self.minimumLineSpacing * 2;
+    }else if(set_x < _move_x){
+        _move_x -= SCREENWITH - self.minimumLineSpacing * 2;
+    }
+    set_x = _move_x;
+    return set_x;
+}
+
+-(CGFloat)SMove:(CGPoint)proposedContentOffset velocity :(CGPoint)velocity{
+    
     CGFloat offSetAdjustment = MAXFLOAT;
     CGFloat horizontalCenter = (CGFloat) (proposedContentOffset.x + (self.collectionView.bounds.size.width / 2.0));
     
@@ -47,6 +75,7 @@
     CGFloat nextOffset          = proposedContentOffset.x + offSetAdjustment;
     
     proposedContentOffset.x     = nextOffset;
+    
     CGFloat deltaX              = proposedContentOffset.x - self.collectionView.contentOffset.x;
     CGFloat velX                = velocity.x;
     
@@ -64,7 +93,7 @@
                 }
             }
         }
-    } else if(velocity.x <  0.0) {
+    } else if(velocity.x <=  0.0) {
         for (UICollectionViewLayoutAttributes *layoutAttributes in array)
         {
             if(layoutAttributes.representedElementCategory == UICollectionElementCategoryCell)
@@ -78,18 +107,17 @@
         }
     }
     
-    proposedContentOffset.y = 0.0;
-    
     if (proposedContentOffset.x == -0.0) {
         proposedContentOffset.x = 0.0;
+        
     }
-    
-    NSLog(@"%f",proposedContentOffset.x);
-    return proposedContentOffset;
+    return proposedContentOffset.x;
+
 }
 
-
-
+-(void)setPagingEnabled:(BOOL)isPagingEnabled{
+    _isPagingEnabled = isPagingEnabled;
+}
 
 
 static CGFloat const ActiveDistance = 350;

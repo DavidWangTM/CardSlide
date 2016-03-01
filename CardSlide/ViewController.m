@@ -25,6 +25,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     DWFlowLayout *layout = [[DWFlowLayout alloc] init];
+    //设置是否需要分页
+    [layout setPagingEnabled:YES];
     self.collectionView.collectionViewLayout = layout;
     data = @[@"01",@"02",@"03",@"04",@"05",@"01",@"02",@"03",@"04",@"05"];
     [_collectionView reloadData];
